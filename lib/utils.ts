@@ -21,8 +21,13 @@ export function timestampToDate(
   }
   
   // If it's a Firestore Timestamp object with toDate method
-  if (typeof timestamp === 'object' && 'toDate' in timestamp && typeof timestamp.toDate === 'function') {
-    return timestamp.toDate();
+  if (
+    typeof timestamp === 'object' &&
+    timestamp !== null &&
+    'toDate' in timestamp &&
+    typeof (timestamp as any).toDate === 'function'
+  ) {
+    return (timestamp as any).toDate();
   }
   
   // If it's a string or number, try to parse it
