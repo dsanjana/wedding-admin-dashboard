@@ -78,12 +78,17 @@ export function serializeRSVPs(rsvps: RSVP[]): SerializableRSVP[] {
           seconds: rsvp.createdAt.seconds,
           nanoseconds: rsvp.createdAt.nanoseconds,
         };
-      } else if (typeof rsvp.createdAt === 'object' && 'seconds' in rsvp.createdAt) {
+      } else if (typeof rsvp.createdAt === 'object' && 'seconds' in rsvp.createdAt && 'nanoseconds' in rsvp.createdAt) {
         // Already in serialized format
         createdAt = rsvp.createdAt as { seconds: number; nanoseconds: number };
-      } else if (rsvp.createdAt.toDate) {
+      } else if (
+        typeof rsvp.createdAt === 'object' &&
+        rsvp.createdAt !== null &&
+        'toDate' in rsvp.createdAt &&
+        typeof (rsvp.createdAt as any).toDate === 'function'
+      ) {
         // Timestamp with toDate method
-        const date = rsvp.createdAt.toDate();
+        const date = (rsvp.createdAt as any).toDate();
         createdAt = {
           seconds: Math.floor(date.getTime() / 1000),
           nanoseconds: (date.getTime() % 1000) * 1000000,
