@@ -1,85 +1,88 @@
-You are a senior full-stack engineer working on a Next.js (App Router) wedding invitation application that already uses Firebase Firestore.
+# Wedding RSVP Admin Dashboard
 
-TASK:
-Build an admin-only RSVP dashboard that displays RSVP statistics and allows exporting the RSVP list to Excel.
+A comprehensive Next.js admin dashboard for managing wedding RSVP responses with table assignment and Excel export capabilities.
 
-========================
-TECH STACK (MANDATORY)
-========================
-- Next.js (App Router)
-- Firebase Firestore
-- Tailwind CSS
-- XLSX library for Excel export
-- file-saver for downloads
+## 🚀 Quick Start
 
-========================
-FEATURE REQUIREMENTS
-========================
+```bash
+# Install dependencies
+npm install
 
-1. Admin Page
-- Create a new admin page at route `/admin`
-- Page is server-rendered
-- Assume admin access is protected by URL secrecy (no auth for now)
+# Set up environment variables
+cp .env.example .env.local
+# Edit .env.local with your Firebase credentials
 
-2. Fetch RSVP Data
-- Read all documents from Firestore collection named `rsvps`
-- Each RSVP document contains:
-  - name (string)
-  - email (string, optional)
-  - guests (number)
-  - attending (boolean)
-  - message (string, optional)
-  - createdAt (timestamp)
+# Run development server
+npm run dev
+```
 
-3. RSVP Statistics (Top Section)
-Display the following metrics:
-- Total RSVPs (total documents)
-- Total “Attending = Yes” count
-- Total Guest Count (sum of guests where attending = true)
+Visit `http://localhost:3001/admin` to access the dashboard.
 
-Display metrics in styled cards using Tailwind CSS.
+## ✨ Features
 
-4. RSVP List Table
-- Display RSVP records in a responsive table
-- Columns:
-  - Name
-  - Guests
-  - Attending (Yes / No)
-  - Message
-- Table must be mobile responsive and scrollable
+- **RSVP Statistics Dashboard** - View total RSVPs, attending count, guest count, and table assignments
+- **Table Number Assignment** - Assign table numbers to guests with inline editing
+- **Excel Export** - Export all RSVP data to Excel format
+- **Mobile Responsive** - Works seamlessly on all devices
+- **Real-time Updates** - Changes sync with Firestore immediately
 
-5. Export to Excel
-- Add a button labeled “Export to Excel”
-- On click:
-  - Generate `.xlsx` file
-  - Export all RSVP records
-  - Columns in Excel:
-    - Name
-    - Email
-    - Guests
-    - Attending
-    - Message
-    - Created At (formatted date)
-- File name:
-  - `wedding-rsvp-list.xlsx`
+## 📋 Requirements
 
-6. Code Structure
-- Create a Firestore helper function to fetch RSVPs
-- Use a client component for Excel export logic
-- Keep admin page server-rendered
-- Clean, readable, maintainable code
+- Node.js 18+
+- Firebase project with Firestore enabled
+- Firestore collection named `rsvps`
 
-7. UI / Styling
-- Use existing wedding UI palette
-- Elegant, clean admin layout
-- Cards for stats
-- Button hover effects
-- No unnecessary animations
+## 📚 Documentation
 
-========================
-DELIVERABLES
-========================
-- `/app/admin/page.tsx`
-- `/lib/rsvpService.ts` (Firestore fetch logic)
-- `/components/RSVPTable.tsx`
-- Instructions to install required libraries
+For detailed documentation, see [DOCUMENTATION.md](./DOCUMENTATION.md)
+
+## 🛠️ Tech Stack
+
+- **Next.js 14** (App Router)
+- **TypeScript**
+- **Firebase Firestore**
+- **Tailwind CSS**
+- **XLSX** (Excel export)
+- **file-saver** (File downloads)
+
+## 📁 Project Structure
+
+```
+├── app/
+│   ├── admin/page.tsx      # Admin dashboard
+│   └── layout.tsx          # Root layout
+├── components/
+│   └── RSVPTable.tsx       # RSVP table component
+├── lib/
+│   ├── firebase.ts         # Firebase config
+│   ├── rsvpService.ts     # RSVP operations
+│   └── utils.ts            # Utilities
+└── package.json
+```
+
+## 🔧 Configuration
+
+### Firestore Data Structure
+
+Your Firestore `rsvps` collection should have documents with:
+- `fullName` (string) - Guest name
+- `email` (string, optional) - Email address
+- `attendance` (string) - "yes" or "no"
+- `numberOfGuests` (number) - Number of guests
+- `message` (string, optional) - Optional message
+- `tableNumber` (number, optional) - Assigned table number
+- `createdAt` (Timestamp) - Creation timestamp
+
+## 📖 Usage
+
+1. **View Statistics**: Dashboard automatically displays RSVP statistics
+2. **Assign Tables**: Click "Assign" button to assign table numbers
+3. **Export Data**: Click "Export to Excel" to download RSVP data
+
+## 🐛 Troubleshooting
+
+See [DOCUMENTATION.md](./DOCUMENTATION.md#troubleshooting) for common issues and solutions.
+
+## 📝 License
+
+Private and proprietary.

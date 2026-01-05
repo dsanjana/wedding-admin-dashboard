@@ -1,5 +1,10 @@
 import { fetchAllRSVPs, calculateStatistics, serializeRSVPs } from '@/lib/rsvpService';
 import RSVPTable from '@/components/RSVPTable';
+import RefreshButton from '@/components/RefreshButton';
+
+// Force dynamic rendering to always fetch fresh data
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default async function AdminPage() {
   const rsvps = await fetchAllRSVPs();
@@ -11,13 +16,16 @@ export default async function AdminPage() {
     <div className="min-h-screen bg-gradient-to-br from-wedding-cream to-white">
       <div className="container mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6 lg:py-8 max-w-7xl">
         {/* Header */}
-        <div className="mb-6 sm:mb-8">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-wedding-burgundy mb-2">
-            Wedding RSVP Dashboard
-          </h1>
-          <p className="text-sm sm:text-base text-gray-600">
-            Manage and view all RSVP responses
-          </p>
+        <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div>
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-wedding-burgundy mb-2">
+              Wedding RSVP Dashboard
+            </h1>
+            <p className="text-sm sm:text-base text-gray-600">
+              Manage and view all RSVP responses
+            </p>
+          </div>
+          <RefreshButton />
         </div>
 
         {/* Statistics Cards */}

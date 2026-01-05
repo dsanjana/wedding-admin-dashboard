@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { SerializableRSVP, updateTableNumber } from '@/lib/rsvpService';
 import { timestampToDate, formatDateForExcel } from '@/lib/utils';
 import * as XLSX from 'xlsx';
@@ -13,6 +13,11 @@ interface RSVPTableProps {
 
 export default function RSVPTable({ rsvps: initialRsvps, onUpdate }: RSVPTableProps) {
   const [rsvps, setRsvps] = useState<SerializableRSVP[]>(initialRsvps);
+
+  // Update local state when props change (e.g., after refresh)
+  useEffect(() => {
+    setRsvps(initialRsvps);
+  }, [initialRsvps]);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [tableNumberValue, setTableNumberValue] = useState<string>('');
   const [isUpdating, setIsUpdating] = useState<string | null>(null);
